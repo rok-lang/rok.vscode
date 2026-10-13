@@ -1,0 +1,99 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "rok",
+  "scopeName": "source.rok",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#attribute" },
+    { "include": "#string" },
+    { "include": "#char" },
+    { "include": "#number" },
+    { "include": "#keyword" },
+    { "include": "#type" },
+    { "include": "#function" }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        { "name": "comment.line.double-slash.rok", "match": "//.*$" },
+        { "name": "comment.block.rok", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "attribute": {
+      "name": "meta.attribute.rok",
+      "begin": "#!?\\[",
+      "end": "\\]",
+      "beginCaptures": { "0": { "name": "punctuation.definition.attribute.rok" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.attribute.rok" } },
+      "patterns": [
+        { "include": "#string" },
+        { "name": "entity.name.function.attribute.rok", "match": "[A-Za-z_][A-Za-z0-9_]*" }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.format.rok",
+          "begin": "\\bf\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.rok", "match": "\\\\." },
+            {
+              "name": "meta.interpolation.rok",
+              "begin": "\\{",
+              "end": "\\}",
+              "beginCaptures": { "0": { "name": "punctuation.section.interpolation.begin.rok" } },
+              "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.rok" } },
+              "patterns": [
+                { "include": "#number" },
+                { "include": "#keyword" },
+                { "include": "#type" },
+                { "include": "#string" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.double.rok",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [{ "name": "constant.character.escape.rok", "match": "\\\\." }]
+        }
+      ]
+    },
+    "char": {
+      "name": "string.quoted.single.rok",
+      "match": "'(\\\\.|[^'\\\\])'"
+    },
+    "number": {
+      "patterns": [
+        { "name": "constant.numeric.hex.rok", "match": "\\b0x[0-9a-fA-F_]+((i|u)(8|16|32|64|128|size))?\\b" },
+        { "name": "constant.numeric.binary.rok", "match": "\\b0b[01_]+((i|u)(8|16|32|64|128|size))?\\b" },
+        { "name": "constant.numeric.rok", "match": "\\b[0-9][0-9_]*(\\.[0-9][0-9_]*)?([eE][+-]?[0-9]+)?((i|u)(8|16|32|64|128|size)|f32|f64)?\\b" }
+      ]
+    },
+    "keyword": {
+      "patterns": [
+        { "name": "keyword.control.rok", "match": "\\b(if|else|match|while|loop|for|return|break|continue|try|throw|async|await|yield|catch|finally|in|where|throws|rethrows|using)\\b" },
+        { "name": "storage.type.rok", "match": "\\b(fn|let|struct|enum|trait|impl|type|const|static|mod|union)\\b" },
+        { "name": "storage.modifier.rok", "match": "\\b(pub|unsafe|ref|mut|extern)\\b" },
+        { "name": "keyword.other.use.rok", "match": "\\b(use)\\b" },
+        { "name": "keyword.operator.word.rok", "match": "\\b(as|is)\\b" },
+        { "name": "constant.language.rok", "match": "\\b(true|false|none)\\b" },
+        { "name": "variable.language.rok", "match": "\\b(self|Self|pkg|any)\\b" }
+      ]
+    },
+    "type": {
+      "patterns": [
+        { "name": "support.type.primitive.rok", "match": "\\b(i8|i16|i32|i64|i128|isize|u8|u16|u32|u64|u128|usize|f32|f64|bool|char|str|int|float)\\b" },
+        { "name": "entity.name.type.rok", "match": "\\b[A-Z][A-Za-z0-9_]*\\b" }
+      ]
+    },
+    "function": {
+      "patterns": [
+        { "match": "\\b(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)", "captures": { "1": { "name": "storage.type.rok" }, "2": { "name": "entity.name.function.rok" } } },
+        { "name": "entity.name.function.call.rok", "match": "\\b[a-z_][A-Za-z0-9_]*(?=\\s*\\()" }
+      ]
+    }
+  }
+}

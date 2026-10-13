@@ -1,0 +1,54 @@
+{
+  "name": "rok",
+  "displayName": "rok",
+  "description": "Syntax highlighting and language server (rokls) support for the rok language.",
+  "version": "0.1.0",
+  "publisher": "rok-lang",
+  "license": "MIT OR Apache-2.0",
+  "repository": { "type": "git", "url": "https://github.com/rok-lang/rok.vscode" },
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Programming Languages"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "rok",
+        "aliases": ["rok", "rok"],
+        "extensions": [".rok"],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "rokon",
+        "aliases": ["ROKON"],
+        "extensions": [".rokon"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      { "language": "rok", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" },
+      { "language": "rokon", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" }
+    ],
+    "configuration": {
+      "title": "rok",
+      "properties": {
+        "rok.server.path": {
+          "type": "string",
+          "default": "rokls",
+          "description": "Path to the rok language server (rokls). On PATH by default."
+        },
+        "rok.server.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run the rok language server for hover, completion, go-to-definition and the rest."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./"
+  },
+  "dependencies": { "vscode-languageclient": "^9.0.1" },
+  "devDependencies": { "@types/vscode": "^1.75.0", "@types/node": "^20.0.0", "typescript": "^5.4.0" }
+}
