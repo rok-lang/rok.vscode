@@ -29,6 +29,15 @@
       { "language": "rok", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" },
       { "language": "rokon", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" }
     ],
+    "semanticTokenScopes": [
+      {
+        "language": "rok",
+        "scopes": {
+          "macro": ["entity.name.function.macro.rok", "support.function.macro", "entity.name.function"],
+          "decorator": ["entity.name.decorator.rok", "storage.type.annotation", "keyword.other"]
+        }
+      }
+    ],
     "configuration": {
       "title": "rok",
       "properties": {

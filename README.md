@@ -2,7 +2,9 @@
 
 Syntax highlighting for `.rok` and `.rokon`, and the rok language server
 (`rokls`) for hover, completion, go-to-definition, find-references,
-rename, document symbols, and formatting.
+rename, document symbols, formatting, and semantic highlighting of macro
+calls and user-defined literal suffixes (what the static grammar cannot
+know).
 
 ## Requirements
 
