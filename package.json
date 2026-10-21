@@ -34,7 +34,9 @@
         "language": "rok",
         "scopes": {
           "macro": ["entity.name.function.macro.rok", "support.function.macro", "entity.name.function"],
-          "decorator": ["entity.name.decorator.rok", "storage.type.annotation", "keyword.other"]
+          "decorator": ["entity.name.decorator.rok", "storage.type.annotation", "meta.decorator"],
+          "keyword": ["keyword.control.rok", "keyword.other"],
+          "operator": ["keyword.operator.rok", "keyword.operator"]
         }
       }
     ],
