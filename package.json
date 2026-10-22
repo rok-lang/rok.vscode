@@ -14,7 +14,7 @@
     "languages": [
       {
         "id": "rok",
-        "aliases": ["rok", "rok"],
+        "aliases": ["rok"],
         "extensions": [".rok"],
         "configuration": "./language-configuration.json"
       },
