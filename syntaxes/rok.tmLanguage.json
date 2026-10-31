@@ -8,6 +8,8 @@
     { "include": "#string" },
     { "include": "#char" },
     { "include": "#number" },
+    { "include": "#function-def" },
+    { "include": "#raw-ident" },
     { "include": "#keyword" },
     { "include": "#type" },
     { "include": "#function" }
@@ -33,6 +35,13 @@
     "string": {
       "patterns": [
         {
+          "name": "string.quoted.double.raw.rok",
+          "begin": "\\br(#*)\"",
+          "end": "\"\\1",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.rok" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.string.end.rok" } }
+        },
+        {
           "name": "string.quoted.double.format.rok",
           "begin": "\\bf\"",
           "end": "\"",
@@ -46,6 +55,7 @@
               "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.rok" } },
               "patterns": [
                 { "include": "#number" },
+                { "include": "#raw-ident" },
                 { "include": "#keyword" },
                 { "include": "#type" },
                 { "include": "#string" }
@@ -55,7 +65,7 @@
         },
         {
           "name": "string.quoted.double.rok",
-          "begin": "\"",
+          "begin": "\\bb\"|\"",
           "end": "\"",
           "patterns": [{ "name": "constant.character.escape.rok", "match": "\\\\." }]
         }
@@ -89,9 +99,19 @@
         { "name": "entity.name.type.rok", "match": "\\b[A-Z][A-Za-z0-9_]*\\b" }
       ]
     },
+    "function-def": {
+      "match": "\\b(fn)\\s+((?:r#)?[A-Za-z_][A-Za-z0-9_]*)",
+      "captures": { "1": { "name": "storage.type.rok" }, "2": { "name": "entity.name.function.rok" } }
+    },
+    "raw-ident": {
+      "comment": "r#name is an identifier, never a keyword (r#\"..\"# is a raw string)",
+      "patterns": [
+        { "name": "entity.name.function.call.rok", "match": "\\br#[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()" },
+        { "name": "variable.other.rok", "match": "\\br#[A-Za-z_][A-Za-z0-9_]*" }
+      ]
+    },
     "function": {
       "patterns": [
-        { "match": "\\b(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)", "captures": { "1": { "name": "storage.type.rok" }, "2": { "name": "entity.name.function.rok" } } },
         { "name": "entity.name.function.call.rok", "match": "\\b[a-z_][A-Za-z0-9_]*(?=\\s*\\()" }
       ]
     }
