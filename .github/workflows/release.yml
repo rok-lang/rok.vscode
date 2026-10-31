@@ -1,11 +1,17 @@
 # On a vX.Y.Z tag: package the .vsix, publish it to the VS Code
-# Marketplace (trusted publishing, no secret) and Open VSX (OVSX_PAT),
-# attach it to a GitHub release. Open VSX is skipped while OVSX_PAT is unset.
+# Marketplace and Open VSX through trusted publishing (no secrets), attach
+# it to a GitHub release. Run by hand with a tag to finish a release that
+# stopped halfway; a version already published is skipped.
 name: release
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: tag to release, e.g. v0.1.0
+        required: true
 
 permissions:
   contents: write
@@ -15,9 +21,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -26,8 +34,8 @@ jobs:
       - name: tag matches package.json
         run: |
           v=$(node -p 'require("./package.json").version')
-          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
-            echo "tag $GITHUB_REF_NAME, package.json $v: bump package.json or retag" >&2
+          if [ "v$v" != "$TAG" ]; then
+            echo "tag $TAG, package.json $v: bump package.json or retag" >&2
             exit 1
           fi
           echo "VSIX=rok-$v.vsix" >> "$GITHUB_ENV"
@@ -39,16 +47,19 @@ jobs:
       - run: npx vsce ls
 
       - name: publish to the VS Code Marketplace
-        run: npx vsce publish --oidc --packagePath "$VSIX"
+        run: npx vsce publish --oidc --skip-duplicate --packagePath "$VSIX"
 
       - name: publish to Open VSX
-        if: env.OVSX_PAT != ''
-        run: npx ovsx publish "$VSIX"
+        run: npx ovsx publish --trusted-publishing --skip-duplicate "$VSIX"
 
       - name: github release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" "$VSIX" \
-            --title "$GITHUB_REF_NAME" \
-            --notes "See [CHANGELOG.md](https://github.com/rok-lang/rok.vscode/blob/$GITHUB_REF_NAME/CHANGELOG.md)."
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$VSIX" --clobber
+          else
+            gh release create "$TAG" "$VSIX" \
+              --title "$TAG" \
+              --notes "See [CHANGELOG.md](https://github.com/rok-lang/rok.vscode/blob/$TAG/CHANGELOG.md)."
+          fi

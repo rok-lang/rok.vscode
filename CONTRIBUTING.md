@@ -45,13 +45,11 @@ attaches it to a GitHub release for the tag. The tag must match
   workflow `release.yml`, no environment. No secret is stored; the workflow
   publishes with `vsce publish --oidc`.
 - Open VSX: an account at <https://open-vsx.org> (sign in with GitHub, sign
-  the publisher agreement), an access token, and the namespace:
+  the publisher agreement), the namespace `rok-lang`, and a trusted
+  publisher on it for GitHub: repository `rok-lang/rok.vscode`, workflow
+  `release.yml`, no environment. The workflow publishes with
+  `ovsx publish --trusted-publishing`.
 
-  ```sh
-  npx ovsx create-namespace rok-lang -p <token>
-  ```
-
-  Store the token as the repository secret `OVSX_PAT`.
-
-Open VSX is skipped while `OVSX_PAT` is unset; the `.vsix` still lands on
-the GitHub release.
+If a release stops halfway, run the workflow by hand from main
+(Actions, release, Run workflow) with the tag; versions already published
+are skipped and the `.vsix` on the GitHub release is replaced.
