@@ -1,17 +1,52 @@
+<img src="https://raw.githubusercontent.com/rok-lang/web/main/assets/rok-transparent-512.png" alt="Rok" width="96">
+
 # Rok for Visual Studio Code
 
-Rok language support for Visual Studio Code: syntax highlighting for `.rok`
-and `.rokon`, plus the rok language server `rokls` for hover, completion,
-go-to-definition, references, rename, symbols, formatting, semantic
-highlighting, signature help, and quick fixes (including `rok add` for a
-missing stone).
+Rok language support: syntax highlighting for `.rok` and `.rokon`, and the
+Rok language server `rokls`.
+
+## Features
+
+- Syntax highlighting from the [rok-syntax](https://github.com/rok-lang/rok-syntax)
+  grammars.
+- From `rokls`, over LSP:
+  - diagnostics
+  - hover
+  - completion
+  - go to definition
+  - find references
+  - rename
+  - document symbols
+  - formatting
+  - semantic highlighting
+  - signature help
+  - quick fixes, including `rok add` for a missing stone
 
 ## Requirements
 
-The rok toolchain, so `rokls` is on your `PATH` (install from
-<https://rok-lang.org/download.html>). If it lives elsewhere, set
-`rok.server.path`. Turn the server off with `rok.server.enable: false`
-(highlighting still works).
+Install Rok so `rokls` is on your `PATH`.
+
+Linux and macOS:
+
+```sh
+curl -fsSL https://rok-lang.org/install.sh | sh
+```
+
+Windows (PowerShell):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm https://rok-lang.org/install.ps1 | iex"
+```
+
+More at <https://rok-lang.org/download>. Without `rokls` you still get
+highlighting.
+
+## Settings
+
+| Setting             | Default | Description                                       |
+| ------------------- | ------- | ------------------------------------------------- |
+| `rok.server.path`   | `rokls` | Path to `rokls`, if it is not on `PATH`.          |
+| `rok.server.enable` | `true`  | Run the language server. Off: highlighting only.  |
 
 ## Grammars
 
@@ -30,12 +65,20 @@ node scripts/sync-grammar.mjs --check               # what CI runs
 
 ## Build
 
+Node 22 or newer.
+
 ```sh
-npm install
-npm run compile
-npx vsce package   # -> rok-0.1.0.vsix; install with: code --install-extension rok-0.1.0.vsix
+npm ci
+npm run compile    # type-check, bundle into out/extension.js
+npm run package    # -> rok-<version>.vsix
+code --install-extension rok-<version>.vsix
 ```
+
+Releasing is in [CONTRIBUTING.md](https://github.com/rok-lang/rok.vscode/blob/main/CONTRIBUTING.md).
 
 ## License
 
-Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
+Licensed under either of
+[MIT](https://github.com/rok-lang/rok.vscode/blob/main/LICENSE-MIT) or
+[Apache-2.0](https://github.com/rok-lang/rok.vscode/blob/main/LICENSE-APACHE),
+at your option.

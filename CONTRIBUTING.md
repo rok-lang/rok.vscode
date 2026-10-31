@@ -1,14 +1,57 @@
 # Contributing to rok.vscode
 
-The VS Code extension for rok: syntax, language configuration, and an LSP client
-for `rokls`.
+The VS Code extension for Rok: syntax, language configuration, and an LSP
+client for `rokls`.
 
 ## Development
 
-Run `npm install`, open the folder in VS Code, and launch the extension with
-F5. The LSP needs `rokls` on your `PATH` (install the rok toolchain).
+Run `npm ci`, open the folder in VS Code, and launch the extension with F5.
+The LSP needs `rokls` on your `PATH` (install Rok). `npm run compile`
+type-checks and bundles `src/` into `out/extension.js`; `npm run package`
+builds the `.vsix`.
 
 ## Submitting
 
 Open a pull request against `main`. By contributing you agree that your work is
 licensed under both MIT and Apache-2.0, the project's dual license.
+
+## Releasing
+
+The extension is published as `rok-lang.rok` to the
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=rok-lang.rok)
+and [Open VSX](https://open-vsx.org/extension/rok-lang/rok). Its version is
+independent of the Rok toolchain.
+
+1. Bump `version` in `package.json` (`npm version X.Y.Z --no-git-tag-version`
+   keeps `package-lock.json` in step) and add an `## X.Y.Z` entry to
+   `CHANGELOG.md`. Commit on `main`.
+2. Tag and push:
+
+   ```sh
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
+   ```
+
+`.github/workflows/release.yml` then builds, checks the grammars against
+rok-syntax, packages `rok-X.Y.Z.vsix`, publishes it to both registries and
+attaches it to a GitHub release for the tag. The tag must match
+`package.json`.
+
+### One-time setup
+
+- VS Code Marketplace: a publisher `rok-lang`
+  (<https://marketplace.visualstudio.com/manage>) and an Azure DevOps
+  personal access token with organization "All accessible organizations"
+  and scope Marketplace: Manage. Store it as the repository secret
+  `VSCE_PAT`.
+- Open VSX: an account at <https://open-vsx.org> (sign in with GitHub, sign
+  the publisher agreement), an access token, and the namespace:
+
+  ```sh
+  npx ovsx create-namespace rok-lang -p <token>
+  ```
+
+  Store the token as the repository secret `OVSX_PAT`.
+
+A registry whose secret is unset is skipped; the `.vsix` still lands on the
+GitHub release.
