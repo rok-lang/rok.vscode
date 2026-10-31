@@ -13,6 +13,21 @@ The rok toolchain, so `rokls` is on your `PATH` (install from
 `rok.server.path`. Turn the server off with `rok.server.enable: false`
 (highlighting still works).
 
+## Grammars
+
+`syntaxes/rok.tmLanguage.json` (`source.rok`) and
+`syntaxes/rokon.tmLanguage.json` (`source.rokon`) are copies of the
+grammars in [rok-syntax](https://github.com/rok-lang/rok-syntax), at the
+commit in `rok-syntax.rev`. Change them there, then sync:
+
+```sh
+node scripts/sync-grammar.mjs --from ../rok-syntax   # copy from a checkout, pin its HEAD
+node scripts/sync-grammar.mjs                       # fetch at the pinned commit
+node scripts/sync-grammar.mjs --check               # what CI runs
+```
+
+`r#match` is one word for double-click and word motions.
+
 ## Build
 
 ```sh
