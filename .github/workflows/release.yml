@@ -35,7 +35,7 @@ jobs:
       - run: npm ci
       - run: npm run compile
       - run: node scripts/sync-grammar.mjs --check
-      - run: npx vsce package --out "$VSIX"
+      - run: npm run package -- --out "$VSIX"
       - run: npx vsce ls
 
       - name: publish to the VS Code Marketplace

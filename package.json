@@ -116,7 +116,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./ --noEmit && esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --target=node18 --minify",
-    "package": "vsce package",
+    "package": "vsce package --skip-license",
     "sync-grammar": "node scripts/sync-grammar.mjs"
   },
   "devDependencies": {
