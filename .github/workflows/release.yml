@@ -1,6 +1,6 @@
 # On a vX.Y.Z tag: package the .vsix, publish it to the VS Code
-# Marketplace and Open VSX through trusted publishing (no secrets), attach
-# it to a GitHub release. Run by hand with a tag to finish a release that
+# Marketplace and Open VSX through trusted publishing, attach it to a GitHub
+# release. Open VSX takes OVSX_PAT instead while that secret is set. Run by hand with a tag to finish a release that
 # stopped halfway; a version already published is skipped.
 name: release
 
@@ -50,7 +50,9 @@ jobs:
         run: npx vsce publish --oidc --skip-duplicate --packagePath "$VSIX"
 
       - name: publish to Open VSX
-        run: npx ovsx publish --trusted-publishing --skip-duplicate "$VSIX"
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx ovsx publish --skip-duplicate "$VSIX"
 
       - name: github release
         env:

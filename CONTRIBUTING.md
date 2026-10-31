@@ -47,8 +47,10 @@ attaches it to a GitHub release for the tag. The tag must match
 - Open VSX: an account at <https://open-vsx.org> (sign in with GitHub, sign
   the publisher agreement), the namespace `rok-lang`, and a trusted
   publisher on it for GitHub: repository `rok-lang/rok.vscode`, workflow
-  `release.yml`, no environment. The workflow publishes with
-  `ovsx publish --trusted-publishing`.
+  `release.yml`, no environment. Open VSX accepts a trusted publisher
+  only from a namespace owner and only for an extension that already has a
+  version, so the first version goes out with an access token stored as
+  `OVSX_PAT`; delete the secret once the trusted publisher is registered.
 
 If a release stops halfway, run the workflow by hand from main
 (Actions, release, Run workflow) with the tag; versions already published
