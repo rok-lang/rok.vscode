@@ -2,8 +2,9 @@
 
 Rok language support for Visual Studio Code: syntax highlighting for `.rok`
 and `.rokon`, plus the rok language server `rokls` for hover, completion,
-go-to-definition, references, rename, symbols, formatting, and semantic
-highlighting.
+go-to-definition, references, rename, symbols, formatting, semantic
+highlighting, signature help, and quick fixes (including `rok add` for a
+missing stone).
 
 ## Requirements
 
