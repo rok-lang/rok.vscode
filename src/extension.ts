@@ -1,7 +1,8 @@
 // Starts the rok language server (rokls) as an LSP client for .rok files.
 // Highlighting comes from the TextMate grammar; everything else (hover,
-// completion, go-to-definition, references, rename, symbols, formatting)
-// comes from the server.
+// completion, go-to-definition, references, rename, symbols, formatting,
+// signature help, quick fixes and their `rok.add` command) comes from the
+// server, which the client handles without extra code here.
 import { workspace, ExtensionContext, window } from "vscode";
 import {
   LanguageClient,
