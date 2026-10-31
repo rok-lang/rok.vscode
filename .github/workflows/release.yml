@@ -1,0 +1,55 @@
+# On a vX.Y.Z tag: package the .vsix, publish it to the VS Code
+# Marketplace (VSCE_PAT) and Open VSX (OVSX_PAT), attach it to a GitHub
+# release. A registry whose secret is unset is skipped.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: tag matches package.json
+        run: |
+          v=$(node -p 'require("./package.json").version')
+          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
+            echo "tag $GITHUB_REF_NAME, package.json $v: bump package.json or retag" >&2
+            exit 1
+          fi
+          echo "VSIX=rok-$v.vsix" >> "$GITHUB_ENV"
+
+      - run: npm ci
+      - run: npm run compile
+      - run: node scripts/sync-grammar.mjs --check
+      - run: npx vsce package --out "$VSIX"
+      - run: npx vsce ls
+
+      - name: publish to the VS Code Marketplace
+        if: env.VSCE_PAT != ''
+        run: npx vsce publish --packagePath "$VSIX"
+
+      - name: publish to Open VSX
+        if: env.OVSX_PAT != ''
+        run: npx ovsx publish "$VSIX"
+
+      - name: github release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "$VSIX" \
+            --title "$GITHUB_REF_NAME" \
+            --notes "See [CHANGELOG.md](https://github.com/rok-lang/rok.vscode/blob/$GITHUB_REF_NAME/CHANGELOG.md)."
