@@ -3,3 +3,6 @@ tsconfig.json
 .vscode-test/**
 node_modules/.bin/**
 **/*.map
+scripts/**
+rok-syntax.rev
+.github/**

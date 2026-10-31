@@ -27,7 +27,7 @@
     ],
     "grammars": [
       { "language": "rok", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" },
-      { "language": "rokon", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" }
+      { "language": "rokon", "scopeName": "source.rokon", "path": "./syntaxes/rokon.tmLanguage.json" }
     ],
     "semanticTokenScopes": [
       {
@@ -58,7 +58,8 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./"
+    "compile": "tsc -p ./",
+    "sync-grammar": "node scripts/sync-grammar.mjs"
   },
   "dependencies": { "vscode-languageclient": "^9.0.1" },
   "devDependencies": { "@types/vscode": "^1.75.0", "@types/node": "^20.0.0", "typescript": "^5.4.0" }
