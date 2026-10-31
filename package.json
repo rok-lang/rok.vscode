@@ -5,38 +5,75 @@
   "version": "0.1.0",
   "publisher": "rok-lang",
   "license": "MIT OR Apache-2.0",
-  "repository": { "type": "git", "url": "https://github.com/rok-lang/rok.vscode" },
-  "engines": { "vscode": "^1.75.0" },
-  "categories": ["Programming Languages"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rok-lang/rok.vscode"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
       {
         "id": "rok",
-        "aliases": ["rok"],
-        "extensions": [".rok"],
+        "aliases": [
+          "rok"
+        ],
+        "extensions": [
+          ".rok"
+        ],
         "configuration": "./language-configuration.json"
       },
       {
         "id": "rokon",
-        "aliases": ["ROKON"],
-        "extensions": [".rokon"],
+        "aliases": [
+          "ROKON"
+        ],
+        "extensions": [
+          ".rokon"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
-      { "language": "rok", "scopeName": "source.rok", "path": "./syntaxes/rok.tmLanguage.json" },
-      { "language": "rokon", "scopeName": "source.rokon", "path": "./syntaxes/rokon.tmLanguage.json" }
+      {
+        "language": "rok",
+        "scopeName": "source.rok",
+        "path": "./syntaxes/rok.tmLanguage.json"
+      },
+      {
+        "language": "rokon",
+        "scopeName": "source.rokon",
+        "path": "./syntaxes/rokon.tmLanguage.json"
+      }
     ],
     "semanticTokenScopes": [
       {
         "language": "rok",
         "scopes": {
-          "macro": ["entity.name.function.macro.rok", "support.function.macro", "entity.name.function"],
-          "decorator": ["entity.name.decorator.rok", "storage.type.annotation", "meta.decorator"],
-          "keyword": ["keyword.control.rok", "keyword.other"],
-          "operator": ["keyword.operator.rok", "keyword.operator"]
+          "macro": [
+            "entity.name.function.macro.rok",
+            "support.function.macro",
+            "entity.name.function"
+          ],
+          "decorator": [
+            "entity.name.decorator.rok",
+            "storage.type.annotation",
+            "meta.decorator"
+          ],
+          "keyword": [
+            "keyword.control.rok",
+            "keyword.other"
+          ],
+          "operator": [
+            "keyword.operator.rok",
+            "keyword.operator"
+          ]
         }
       }
     ],
@@ -58,9 +95,17 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "tsc -p ./ --noEmit && esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --target=node18 --minify",
+    "package": "vsce package",
     "sync-grammar": "node scripts/sync-grammar.mjs"
   },
-  "dependencies": { "vscode-languageclient": "^9.0.1" },
-  "devDependencies": { "@types/vscode": "^1.75.0", "@types/node": "^20.0.0", "typescript": "^5.4.0" }
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "~1.82.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "ovsx": "^1.3.0",
+    "typescript": "^5.4.0",
+    "vscode-languageclient": "^9.0.1"
+  }
 }

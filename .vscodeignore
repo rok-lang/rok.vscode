@@ -1,8 +1,12 @@
-src/**
-tsconfig.json
-.vscode-test/**
-node_modules/.bin/**
-**/*.map
-scripts/**
-rok-syntax.rev
-.github/**
+# Ship only what the extension needs; out/extension.js bundles
+# vscode-languageclient, so no node_modules.
+**
+!package.json
+!out/extension.js
+!syntaxes/*.tmLanguage.json
+!language-configuration.json
+!images/icon.png
+!README.md
+!CHANGELOG.md
+!LICENSE-MIT
+!LICENSE-APACHE
