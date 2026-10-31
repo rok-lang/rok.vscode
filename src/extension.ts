@@ -1,4 +1,4 @@
-// Starts the rok language server (rokls) as an LSP client for .rok files.
+// Starts the Rok language server (rokls) as an LSP client for .rok files.
 // Highlighting comes from the TextMate grammar; everything else (hover,
 // completion, go-to-definition, references, rename, symbols, formatting,
 // signature help, quick fixes and their `rok.add` command) comes from the
@@ -28,10 +28,10 @@ export function activate(context: ExtensionContext) {
     synchronize: { fileEvents: workspace.createFileSystemWatcher("**/*.rok") },
   };
 
-  client = new LanguageClient("rok", "rok language server", server, clientOptions);
+  client = new LanguageClient("rok", "Rok language server", server, clientOptions);
   client.start().catch((e) => {
     window.showWarningMessage(
-      `rok: could not start the language server (${command}). ` +
+      `Rok: could not start the language server (${command}). ` +
         `Install the toolchain, or set "rok.server.path". Highlighting still works. ${e}`
     );
   });

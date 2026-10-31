@@ -1,19 +1,39 @@
 {
   "name": "rok",
-  "displayName": "rok",
-  "description": "Syntax highlighting and language server (rokls) support for the rok language.",
+  "displayName": "Rok",
+  "description": "Rok language support: syntax highlighting and the rokls language server",
   "version": "0.1.0",
   "publisher": "rok-lang",
   "license": "MIT OR Apache-2.0",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "homepage": "https://rok-lang.org",
+  "bugs": {
+    "url": "https://github.com/rok-lang/rok.vscode/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rok-lang/rok.vscode"
   },
+  "pricing": "Free",
+  "keywords": [
+    "rok",
+    "rokon",
+    "rokls",
+    "language server",
+    "lsp",
+    "syntax highlighting"
+  ],
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Formatters",
+    "Linters"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -22,7 +42,7 @@
       {
         "id": "rok",
         "aliases": [
-          "rok"
+          "Rok"
         ],
         "extensions": [
           ".rok"
@@ -78,17 +98,17 @@
       }
     ],
     "configuration": {
-      "title": "rok",
+      "title": "Rok",
       "properties": {
         "rok.server.path": {
           "type": "string",
           "default": "rokls",
-          "description": "Path to the rok language server (rokls). On PATH by default."
+          "description": "Path to the Rok language server (rokls). On PATH by default."
         },
         "rok.server.enable": {
           "type": "boolean",
           "default": true,
-          "description": "Run the rok language server for hover, completion, go-to-definition and the rest."
+          "description": "Run the Rok language server for diagnostics, hover, completion, go-to-definition and the rest."
         }
       }
     }
