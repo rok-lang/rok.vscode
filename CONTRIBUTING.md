@@ -40,10 +40,10 @@ attaches it to a GitHub release for the tag. The tag must match
 ### One-time setup
 
 - VS Code Marketplace: a publisher `rok-lang`
-  (<https://marketplace.visualstudio.com/manage>) and an Azure DevOps
-  personal access token with organization "All accessible organizations"
-  and scope Marketplace: Manage. Store it as the repository secret
-  `VSCE_PAT`.
+  (<https://marketplace.visualstudio.com/manage>) with a trusted publishing
+  policy for GitHub Actions: owner `rok-lang`, repository `rok.vscode`,
+  workflow `release.yml`, no environment. No secret is stored; the workflow
+  publishes with `vsce publish --oidc`.
 - Open VSX: an account at <https://open-vsx.org> (sign in with GitHub, sign
   the publisher agreement), an access token, and the namespace:
 
@@ -53,5 +53,5 @@ attaches it to a GitHub release for the tag. The tag must match
 
   Store the token as the repository secret `OVSX_PAT`.
 
-A registry whose secret is unset is skipped; the `.vsix` still lands on the
-GitHub release.
+Open VSX is skipped while `OVSX_PAT` is unset; the `.vsix` still lands on
+the GitHub release.
