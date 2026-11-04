@@ -5,8 +5,7 @@
 //   node scripts/sync-grammar.mjs --check [--from DIR]
 //                                                  fail if syntaxes/ differs from the source
 //
-// syntaxes/ is never edited by hand: change the grammars in rok-syntax,
-// then sync.
+// Never edit syntaxes/ by hand: change rok-syntax, then sync.
 
 import fs from "node:fs";
 import path from "node:path";
