@@ -24,7 +24,8 @@ Rok language server `rokls`.
 
 ## Requirements
 
-Install Rok so `rokls` is on your `PATH`.
+Install Rok 0.2 or later so `rokls` is on your `PATH`; Rok 0.1 is no
+longer supported.
 
 Linux and macOS:
 
